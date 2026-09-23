@@ -1,0 +1,1534 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Scriptorium API v2",
+    "version": "2.0.0",
+    "description": "Catalog, acquisition, queue and device-outbox operations of the Scriptorium head unit."
+  },
+  "paths": {
+    "/api/v2/catalog/webnovel": {
+      "post": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Add Webnovel",
+        "operationId": "add_webnovel_api_v2_catalog_webnovel_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebnovelAdd"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Add Webnovel Api V2 Catalog Webnovel Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/catalog/works": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "List Works",
+        "operationId": "list_works_api_v2_catalog_works_get",
+        "parameters": [
+          {
+            "name": "content_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/ContentType"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Content Type"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response List Works Api V2 Catalog Works Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/catalog/works/{work_id}": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Get Work",
+        "operationId": "get_work_api_v2_catalog_works__work_id__get",
+        "parameters": [
+          {
+            "name": "work_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Work Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Work Api V2 Catalog Works  Work Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/catalog/works/{work_id}/chapters": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "List Chapters",
+        "operationId": "list_chapters_api_v2_catalog_works__work_id__chapters_get",
+        "parameters": [
+          {
+            "name": "work_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Work Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response List Chapters Api V2 Catalog Works  Work Id  Chapters Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/wanted": {
+      "get": {
+        "tags": [
+          "wanted"
+        ],
+        "summary": "List Wanted",
+        "operationId": "list_wanted_api_v2_wanted_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response List Wanted Api V2 Wanted Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "wanted"
+        ],
+        "summary": "Add Wanted",
+        "operationId": "add_wanted_api_v2_wanted_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WantedCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Add Wanted Api V2 Wanted Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/wanted/run": {
+      "post": {
+        "tags": [
+          "wanted"
+        ],
+        "summary": "Run All",
+        "operationId": "run_all_api_v2_wanted_run_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Run All Api V2 Wanted Run Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/wanted/{wanted_id}/run": {
+      "post": {
+        "tags": [
+          "wanted"
+        ],
+        "summary": "Run One",
+        "operationId": "run_one_api_v2_wanted__wanted_id__run_post",
+        "parameters": [
+          {
+            "name": "wanted_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Wanted Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Run One Api V2 Wanted  Wanted Id  Run Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/search/metadata": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "summary": "Search Metadata",
+        "description": "Search the book metadata provider (rreading-glasses / bookinfo.pro).",
+        "operationId": "search_metadata_api_v2_search_metadata_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkInfo"
+                  },
+                  "title": "Response Search Metadata Api V2 Search Metadata Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/search/releases": {
+      "post": {
+        "tags": [
+          "search"
+        ],
+        "summary": "Search Releases",
+        "description": "Search the appropriate engine's sources for each requested content type.\n\nRoutes torrent types to the book indexers and serialized types to the omni_dl\nscrape providers, then merges and ranks the candidates.",
+        "operationId": "search_releases_api_v2_search_releases_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManualSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Release"
+                  },
+                  "type": "array",
+                  "title": "Response Search Releases Api V2 Search Releases Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/queue": {
+      "get": {
+        "tags": [
+          "queue"
+        ],
+        "summary": "List Queue",
+        "operationId": "list_queue_api_v2_queue_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response List Queue Api V2 Queue Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/queue/poll": {
+      "post": {
+        "tags": [
+          "queue"
+        ],
+        "summary": "Poll Now",
+        "description": "Advance all in-flight downloads (torrent + scrape) now.",
+        "operationId": "poll_now_api_v2_queue_poll_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Poll Now Api V2 Queue Poll Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/library/sync": {
+      "post": {
+        "tags": [
+          "library"
+        ],
+        "summary": "Trigger Sync",
+        "description": "Pull inventory from book backends into the unified catalog.",
+        "operationId": "trigger_sync_api_v2_library_sync_post",
+        "parameters": [
+          {
+            "name": "rescan",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Rescan"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Trigger Sync Api V2 Library Sync Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/library/scan/{backend}": {
+      "post": {
+        "tags": [
+          "library"
+        ],
+        "summary": "Trigger Scan",
+        "description": "Ask a backend to rescan its libraries.",
+        "operationId": "trigger_scan_api_v2_library_scan__backend__post",
+        "parameters": [
+          {
+            "name": "backend",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Backend"
+            }
+          },
+          {
+            "name": "library_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Library Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Trigger Scan Api V2 Library Scan  Backend  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/ready": {
+      "get": {
+        "tags": [
+          "status"
+        ],
+        "summary": "Ready",
+        "description": "Readiness probe: DB reachable. Distinct from liveness (/health).",
+        "operationId": "ready_api_v2_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Ready Api V2 Ready Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/status": {
+      "get": {
+        "tags": [
+          "status"
+        ],
+        "summary": "Status",
+        "operationId": "status_api_v2_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Status Api V2 Status Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/settings": {
+      "get": {
+        "tags": [
+          "status"
+        ],
+        "summary": "Settings",
+        "operationId": "settings_api_v2_settings_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Settings Api V2 Settings Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/kindle/queue": {
+      "get": {
+        "tags": [
+          "kindle"
+        ],
+        "summary": "List Queue",
+        "description": "Everything in the outbox, newest first. ``state`` narrows it.",
+        "operationId": "list_queue_api_v2_kindle_queue_get",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/KindleState"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response List Queue Api V2 Kindle Queue Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "kindle"
+        ],
+        "summary": "Enqueue",
+        "operationId": "enqueue_api_v2_kindle_queue_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueueRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Enqueue Api V2 Kindle Queue Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/kindle/pending": {
+      "get": {
+        "tags": [
+          "kindle"
+        ],
+        "summary": "Pending",
+        "description": "What the sync client should act on: queued, failed retries, and stale sends.\n\nA stale row (the EPUB grew since it was sent) is included so a novel that\ngained 200 chapters gets re-delivered rather than sitting at ``sent``\nforever looking done.",
+        "operationId": "pending_api_v2_kindle_pending_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Pending Api V2 Kindle Pending Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/kindle/queue/{edition_id}/state": {
+      "post": {
+        "tags": [
+          "kindle"
+        ],
+        "summary": "Set State",
+        "description": "Progress report from the sync client.",
+        "operationId": "set_state_api_v2_kindle_queue__edition_id__state_post",
+        "parameters": [
+          {
+            "name": "edition_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Edition Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Set State Api V2 Kindle Queue  Edition Id  State Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/kindle/queue/{edition_id}": {
+      "delete": {
+        "tags": [
+          "kindle"
+        ],
+        "summary": "Dequeue",
+        "operationId": "dequeue_api_v2_kindle_queue__edition_id__delete",
+        "parameters": [
+          {
+            "name": "edition_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Edition Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Dequeue Api V2 Kindle Queue  Edition Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/users/me": {
+      "get": {
+        "tags": [
+          "komga-shim"
+        ],
+        "summary": "Users Me",
+        "operationId": "users_me_api_v2_users_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Users Me Api V2 Users Me Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/authors": {
+      "get": {
+        "tags": [
+          "komga-shim"
+        ],
+        "summary": "Empty Page",
+        "operationId": "empty_page_api_v2_authors_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Empty Page Api V2 Authors Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthorInfo": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "sort_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sort Name"
+          },
+          "birth_year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birth Year"
+          },
+          "role": {
+            "$ref": "#/components/schemas/ContributorRole",
+            "default": "author"
+          },
+          "metadata_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "AuthorInfo"
+      },
+      "Backend": {
+        "type": "string",
+        "enum": [
+          "audiobookshelf",
+          "komga",
+          "kavita"
+        ],
+        "title": "Backend",
+        "description": "An external library server Scriptorium syncs with."
+      },
+      "ContentType": {
+        "type": "string",
+        "enum": [
+          "audiobook",
+          "ebook",
+          "manga",
+          "comic",
+          "webnovel"
+        ],
+        "title": "ContentType",
+        "description": "What kind of thing a Work is \u2014 the user-facing category."
+      },
+      "ContributorRole": {
+        "type": "string",
+        "enum": [
+          "author",
+          "editor",
+          "translator",
+          "artist",
+          "contributor"
+        ],
+        "title": "ContributorRole"
+      },
+      "EditionInfo": {
+        "properties": {
+          "content_type": {
+            "$ref": "#/components/schemas/ContentType"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "extension": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Extension"
+          },
+          "isbn": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Isbn"
+          },
+          "asin": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asin"
+          },
+          "duration_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Minutes"
+          },
+          "metadata_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "content_type"
+        ],
+        "title": "EditionInfo"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "KindleState": {
+        "type": "string",
+        "enum": [
+          "queued",
+          "converted",
+          "sent",
+          "failed"
+        ],
+        "title": "KindleState",
+        "description": "Lifecycle of one web novel on its way to the Kindle over USB.\n\nThe Kindle is never online, so nothing here can be pushed \u2014 a row sits in\n``QUEUED`` until ``scripts/kindle-sync`` runs on the Mac with the device\nplugged in. ``CONVERTED`` means an AZW3 exists in the outbox (the Kindle\ncannot read EPUB); ``SENT`` means it was copied onto the device."
+      },
+      "ManualSearchRequest": {
+        "properties": {
+          "query": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Query"
+          },
+          "asin": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asin"
+          },
+          "isbn": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Isbn"
+          },
+          "content_types": {
+            "items": {
+              "$ref": "#/components/schemas/ContentType"
+            },
+            "type": "array",
+            "title": "Content Types"
+          }
+        },
+        "type": "object",
+        "title": "ManualSearchRequest"
+      },
+      "QueueRequest": {
+        "properties": {
+          "work_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Work Id"
+          },
+          "edition_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edition Id"
+          }
+        },
+        "type": "object",
+        "title": "QueueRequest"
+      },
+      "Release": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "content_type": {
+            "$ref": "#/components/schemas/ContentType"
+          },
+          "magnet_or_url": {
+            "type": "string",
+            "title": "Magnet Or Url"
+          },
+          "size_bytes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size Bytes"
+          },
+          "seeders": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seeders"
+          },
+          "leechers": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leechers"
+          },
+          "extension": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Extension"
+          },
+          "info_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Info Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "title",
+          "content_type",
+          "magnet_or_url"
+        ],
+        "title": "Release",
+        "description": "A candidate download surfaced by an indexer or scrape provider."
+      },
+      "StateRequest": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/KindleState"
+          },
+          "azw3_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Azw3 Path"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "title": "Size Bytes",
+            "default": 0
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "state"
+        ],
+        "title": "StateRequest"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WantedCreate": {
+        "properties": {
+          "work_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Work Id"
+          },
+          "edition_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edition Id"
+          },
+          "content_types": {
+            "items": {
+              "$ref": "#/components/schemas/ContentType"
+            },
+            "type": "array",
+            "title": "Content Types"
+          },
+          "monitor": {
+            "type": "boolean",
+            "title": "Monitor",
+            "default": true
+          }
+        },
+        "type": "object",
+        "title": "WantedCreate"
+      },
+      "WebnovelAdd": {
+        "properties": {
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "author": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Author"
+          },
+          "provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provider"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "monitor": {
+            "type": "boolean",
+            "title": "Monitor",
+            "default": true
+          },
+          "acquire": {
+            "type": "boolean",
+            "title": "Acquire",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_url"
+        ],
+        "title": "WebnovelAdd",
+        "description": "Add a web novel to the catalog by its source page URL so it can be\nmonitored and acquired (by the webnovel worker, or the in-process scrape\nengine if no worker is enabled)."
+      },
+      "WorkInfo": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "sort_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sort Title"
+          },
+          "content_type": {
+            "$ref": "#/components/schemas/ContentType",
+            "default": "ebook"
+          },
+          "is_anthology": {
+            "type": "boolean",
+            "title": "Is Anthology",
+            "default": false
+          },
+          "metadata_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata Id"
+          },
+          "authors": {
+            "items": {
+              "$ref": "#/components/schemas/AuthorInfo"
+            },
+            "type": "array",
+            "title": "Authors"
+          },
+          "editions": {
+            "items": {
+              "$ref": "#/components/schemas/EditionInfo"
+            },
+            "type": "array",
+            "title": "Editions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "title": "WorkInfo"
+      }
+    }
+  }
+}
