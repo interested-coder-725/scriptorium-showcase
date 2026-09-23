@@ -1,7 +1,7 @@
 # Scriptorium: A Head/Worker Architecture for Reconciling a Personal Text-Media Library Against Unreliable Sources
 
 **Todd Odell**
-Associate of Applied Science, Computer Science · Maestro College
+Associate of Applied Science, AI Software Engineering · Maestro College
 
 *White paper · September 2026 · describes source revision at 93 commits, schema revision `0004_kindle_queue`*
 
