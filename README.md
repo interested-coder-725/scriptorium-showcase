@@ -14,6 +14,94 @@ chapters.
 This repository is a **showcase**: it presents the design, the API and a few
 representative algorithms. The full source is private.
 
+## Architecture
+
+The head owns the catalog and is its only writer. Acquisition is delegated per
+content type: web novels and manga go to stateless worker containers over a small
+HTTP contract, books run in-process. A worker can crash or be rebuilt with no
+catalog loss; the next poll re-reports the truth and the head reconciles.
+
+```mermaid
+flowchart TB
+  subgraph SRC["Upstream sources · unreliable"]
+    WNS["Web-novel sites"]
+    MGS["Manga sources"]
+    BKS["Book indexers"]
+  end
+
+  subgraph ACQ["Acquirers · one per content type"]
+    WNW["Web-novel worker<br/>lightnovel-crawler<br/><i>remote, stateless</i>"]
+    MGW["Manga server<br/>Suwayomi<br/><i>remote, stateless</i>"]
+    BKE["Book engine<br/>search → download client<br/><i>in-process</i>"]
+  end
+
+  subgraph HEAD["Head unit · FastAPI · the only catalog writer"]
+    SCH["Scheduler<br/>sync · wanted · poll"]
+    REG["Engine registry<br/>reconcile loop"]
+    DB[("Catalog · SQLite")]
+    API["/api/v2 + web UI"]
+    SHIM["Komga-protocol shim<br/>/ · /webnovels · /ebooks"]
+  end
+
+  LIB[("Library tree<br/>EPUBs on disk")]
+
+  subgraph DEL["Delivery"]
+    RDR["Komga reader apps"]
+    LEC["Lectern reader"]
+    ABS["Audiobookshelf"]
+  end
+
+  WNS --> WNW
+  MGS --> MGW
+  BKS --> BKE
+  WNW -- "job state + chapters<br/>(polled by head)" --> REG
+  MGW -- "library sweep" --> REG
+  BKE --> REG
+  WNW -- "atomic EPUB place" --> LIB
+  MGW -. "live GraphQL, no mirror" .-> API
+  SCH --> REG --> DB
+  DB --> API
+  DB --> SHIM
+  LIB --> SHIM
+  SHIM --> RDR
+  LIB --> LEC
+  BKE -- "import" --> ABS
+```
+
+Two side lanes turn what the library already holds into other formats. Neither one
+lets the head push anything: GPU renders are requested through a filesystem job
+queue instead of a docker socket, and Kindles are only reached by a USB client
+that pulls from an outbox.
+
+```mermaid
+flowchart LR
+  subgraph HEAD["Head unit"]
+    API["/api/v2 + web UI"]
+    KQ["Kindle outbox<br/>per-device state"]
+  end
+
+  subgraph TTS["Text-to-speech lane"]
+    Q[/"Filesystem job queue<br/>work_id.request"/]
+    RUN["Host runner<br/>claims by atomic rename"]
+    GPU["XTTS render<br/>4 word-balanced GPU lanes"]
+  end
+
+  subgraph KIN["Kindle lane · device stays offline"]
+    SYNC["USB sync client<br/>runs on plug-in"]
+    CONV["EPUB → AZW3"]
+    DEV["Kindle"]
+  end
+
+  ABS["Audiobookshelf"]
+
+  API -- "writes request file<br/>(no docker socket)" --> Q
+  RUN -- "claims" --> Q
+  RUN --> GPU -- "per-chapter .m4b" --> ABS
+  API --> KQ
+  SYNC -- "pull pending, report" --> KQ
+  SYNC --> CONV --> DEV
+```
+
 ## Read
 
 **[The white paper](WHITEPAPER.md)** covers:
