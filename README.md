@@ -3,7 +3,7 @@
 **A head/worker backend for keeping a personal library of growing works complete
 against unreliable sources.**
 
-Todd Odell · A.A.S. Computer Science, Maestro College · 2026
+Todd Odell · A.A.S. AI software engineering, Maestro College · 2026
 
 Scriptorium is a self-hosted backend that tracks serialized web fiction, manga and
 ebooks, keeps each work current as new chapters are published, and delivers the
